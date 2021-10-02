@@ -1,0 +1,10 @@
+{
+    "id": "com.github.adepreis.cluster",
+    "version": "1.0.0",
+    "vendor": "adepreis",
+    "type": "qml",
+    "main": "main.qml",
+    "title": "QML App. Automotive digital gauge cluster made for webOS",
+    "icon": "icon.png",
+    "requiredPermissions" : ["time.query", "application.operation"]
+}
