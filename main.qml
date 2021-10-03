@@ -29,50 +29,76 @@ WebOSWindow {
     color: "lightblue"
     displayAffinity: params["displayAffinity"]
 
-    Text {
-        id: mainText
+    Row {
         anchors.centerIn: parent
-        font.family: "Helvetica"
-        font.pointSize: 50
-        text: "Hello, QML Application!"
-    }
+        spacing: 20
 
-    property var launchParams: params
-    onLaunchParamsChanged: {
-        pmLog.info("LAUNCH_PARAMS", {"params": launchParams})
-    }
+        Rectangle {
+            id: rect1
+            width: root.width * 0.20
+            height: root.height * 0.85
+            color: "#45c0c0c0"
+            border.color: "gray"
+            border.width: 2
+            radius: 5
 
-    Service {
-        id: systemService
-        appId: "com.example.app.qml"
-
-        function getTime() {
-            call("luna://com.webos.service.systemservice","/clock/getTime","{}")
+            Text {
+                id: text1
+                anchors.centerIn: parent
+                text: "t1: " + parent.width + 'x' + parent.height
+            }
         }
 
-        onResponse: {
-            var jsonObject = JSON.parse(payload);
-            pmLog.info("GETTIME", {"utc": jsonObject.utc});
-            mainText.text = "UTC : " + jsonObject.utc
+        Rectangle {
+            id: rect2
+            width: root.width * 0.50
+            height: root.height * 0.85
+            color: "#45c0c0c0"
+            border.color: "slategrey"
+            border.width: 2
+            radius: 10
+
+            Text {
+                id: text2
+                anchors.centerIn: parent
+                text: parent.width + 'x' + parent.height
+            }
         }
 
-        onError: {
-            var jsonObject = JSON.parse(payload);
-            pmLog.error("GETTIME", {"error": jsonObject});
-        }
+        Rectangle {
+            id: rect3
+            width: root.width * 0.20
+            height: root.height * 0.85
+            color: "#45c0c0c0"
+            border.color: "gray"
+            border.width: 2
+            radius: 5
+
+            Text {
+                id: text3
+                anchors.centerIn: parent
+                text: "<h2>Titre</h2>t3: " + parent.width + 'x' + parent.height
+            }
+        }        
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: systemService.getTime()
-    }
+        
+        /*
+            drag.target: rect
+        */
+        drag.target: parent
+        drag.axis: Drag.XAxis
+        drag.minimumX: -50
+        drag.maximumX: 50
+        drag.filterChildren: true
 
-    onWindowStateChanged: {
-        pmLog.info("WINDOW_CHANGED", {"status": windowState})
-    }
-
-    PmLog {
-        id: pmLog
-        context: "QMLApp"
+        onClicked: {
+            let temp = text1.text
+            text1.text = text2.text
+            text2.text = text3.text
+            text3.text = temp
+        }
     }
 }
