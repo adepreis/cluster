@@ -1,0 +1,11 @@
+{
+  "id": "cockpit",
+  "version": "0.0.1",
+  "vendor": "My Company",
+  "type": "web",
+  "main": "index.html",
+  "title": "React Cockpit",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "iconColor": "#282c34"
+}
